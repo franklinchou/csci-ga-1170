@@ -30,4 +30,4 @@ the value that is expected (the maximum of the subarray `A[0:i]`), therefore the
 is correct.
 
 5. Running time. Because the loop will only need to traverse the collection once, the
-running time of this algorithm against an array of `N` items is `N`.
+running time of this algorithm against an array of `N` items is `O(N)`.
