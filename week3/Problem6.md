@@ -226,11 +226,3 @@ extract-min() -> int:
 ```
 
 `extract-min` runs in `O(log(n))` time because `max_heapify` runs in `O(log(n))` time.
-
-
-
-
-
-
-
-
