@@ -99,9 +99,9 @@ The worst case run time for `get-min` is `O(1)`.
 ```
 extract-min() -> int:
   min = get-min();
-  // Unfortunately, that's not the end of the story, the array must then be shifted-left by one element
-  // in order to extract the minimum element. shift-copy must loop through the entire array, so it takes n-time. 
-  // A similar method is used in Unordered Array, extract-min
+  // Unfortunately, that's not the end of the story, the array must then be shifted-left by
+  // one element in order to extract the minimum element. shift-copy must loop through the  
+  // entire array, so it takes n-time. A similar method is used in Unordered Array, extract-min
   shift-copy;
   last -= 1;
   return min;
