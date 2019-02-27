@@ -12,8 +12,6 @@
 |Heap (using array implicit data structure) | `O(log(n))` | `O(1)` | `O(log(n))` |
 
 
-
-
 For all implementations, below, let `A` represent an input array and `k` represent the element to be inserted (where applicable). All arrays are 0-indexed. Let `last` be the index of the first non-null value in the array.
 
 ## 1. Unordered Array
@@ -203,10 +201,32 @@ insert(H, k) -> ():
   // Let open represent the index of the first available position in the heap; 
   // if the heap is implemented using an array, open = last (the first non-null 
   // value of the array).
-  increaseKey(open, k)
+  decrease-key(open, k)
 ```
 
-`insert` takes `O(log(n))` time because increase key takes `O(log(n))` time (the time to heapify the tree on the parent node of the inserted key, down to the root).
+Where `decrease-key` calls:
+
+```
+// decrease the value of the element at i to k
+decrease-key(i, k) -> ():
+  // Note: Calls to the internal implicit data structure have been omitted; assume
+  // that H(i) fetches the value at i in the internal array representation of the heap.
+  if H(i) > k: 
+    // set the value first, then enforce the min-heap condition
+    H(i) = k;
+    // get parent index takes constant time (array access)
+    parent = get-parent-index(i);
+    while (H(parent) > H(i) && i != 0):
+      // swap item at parent index with the item at i 
+      // exchange simply exchanges the values in an array; constant time
+      exchange(parent, i);
+      // set the new index to the swapped index
+      i = parent;
+  // if the item to be inserted is greater than the item existing at i, do nothing 
+```
+
+
+`insert` takes `O(log(n))` time because decrease key takes `O(log(n))` time (the time to heapify the tree on the parent node of the inserted key, down to the root).
 
 ```
 get-min() -> int:
@@ -220,12 +240,26 @@ extract-min() -> int:
   min = H.root;
   H.root = H.last; // exchange the root with the last element of the heap
   H.last = null; // Perform the extraction.
-  H.heap_size -= 1; // since the min is extracted, the heap reduces in size by 1
-  H.max_heapify(H.root);
+  H.heap-size -= 1; // since the min is extracted, the heap reduces in size by 1
+  H.min-heapify(H.root);
   return min;
 ```
 
-`extract-min` runs in `O(log(n))` time because `max_heapify` runs in `O(log(n))` time.
+Where `min-heapify()` calls:
+
+```
+min-heapify(i) -> ():
+  left = get-left-index(i);
+  right = get-right-index(i);
+  // get the index of the smallest item in the set of {i, left, right}
+  smallest = min-index(i, left, right);
+  if H(i) != smallest:
+    // swap item at index smallest with the ith element
+    exchange(smallest, i);
+    min-heapify(smallest);
+```
+
+`extract-min` runs in `O(log(n))` time because `min-heapify` runs in `O(log(n))` time.
 
 
 

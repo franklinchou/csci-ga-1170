@@ -1,0 +1,235 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Problem 6.md</title>
+<style type="text/css">
+  code{white-space: pre; background-color:#f2f2f2;}
+  pre{background-color:#f2f2f2;}
+</style>
+</head>
+<body id="preview">
+<h1><a id="Problem_6_0"></a>Problem 6</h1>
+<h2><a id="Summary_3"></a>Summary</h2>
+<table border="1" style="border-collapse: collapse;">
+<thead>
+<tr>
+<th style="text-align:left">Implementation</th>
+<th style="text-align:left">insert</th>
+<th style="text-align:left">get-min</th>
+<th style="text-align:left">extract-min</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Unordered Array</td>
+<td style="text-align:left"><code>O(n)</code></td>
+<td style="text-align:left"><code>O(n)</code></td>
+<td style="text-align:left"><code>O(n)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ordered Array</td>
+<td style="text-align:left"><code>O(n)</code></td>
+<td style="text-align:left"><code>O(1)</code></td>
+<td style="text-align:left"><code>O(n)</code> (could be <code>O(1)</code>, see note)</td>
+</tr>
+<tr>
+<td style="text-align:left">Unordered Linked List</td>
+<td style="text-align:left"><code>O(n)</code></td>
+<td style="text-align:left"><code>O(n)</code></td>
+<td style="text-align:left"><code>O(n)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Ordered Linked List</td>
+<td style="text-align:left"><code>O(n)</code></td>
+<td style="text-align:left"><code>O(1)</code></td>
+<td style="text-align:left"><code>O(1)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Heap (using array implicit data structure)</td>
+<td style="text-align:left"><code>O(log(n))</code></td>
+<td style="text-align:left"><code>O(1)</code></td>
+<td style="text-align:left"><code>O(log(n))</code></td>
+</tr>
+</tbody>
+</table>
+<p>For all implementations, below, let <code>A</code> represent an input array and <code>k</code> represent the element to be inserted (where applicable). All arrays are 0-indexed. Let <code>last</code> be the index of the first non-null value in the array.</p>
+<h2><a id="1_Unordered_Array_16"></a>1. Unordered Array</h2>
+<pre><code>insert(A, k) -&gt; (): 
+  // since the list is unordered, simply adding to the end will suffice
+  A[last + 1] = k;
+</code></pre>
+<p>Inserting into the first empty element of an unordered array takes <code>O(n)</code> time.</p>
+<pre><code>get-min() -&gt; int:
+  // in an unordered array, the minimum value is obtained through linear search
+  // linear search runs in O(n) time
+  if A.length == 1:
+    return A[0];
+  else:
+    min = Integer.MAX();
+    for i in A:
+      if i &lt; min:
+        min = i;
+     return min;
+</code></pre>
+<p>Because <code>get-min()</code> uses linear search, it runs in <code>O(n)</code> time.</p>
+<pre><code>extract-min() -&gt; int:
+  if A.length == 1:
+    return A[0];
+  i = 0;
+  j = 0; // Let j be the index where the minimum occurs
+  min = Integer.MAX();
+  for i = 0 to A.length:
+    if A[i] &lt; min:
+      min = A[i];
+      j = i;
+    i += 1;
+  
+  A[j] = null; // extract the minimum
+
+  // Close the &quot;gap&quot; created by removing an element
+  for q = j to A.length:
+    if A[q + 1] == null:
+      break;
+    A[q] = A[q + 1];
+  last -= 1; // preserve the index of the last element of the array
+  assert for all i = 0 to last, A[i] != null
+  return min;
+</code></pre>
+<p>The worst case run time for this implementation of extract-min is <code>O(n)</code>.</p>
+<h2><a id="2_Ordered_array_70"></a>2. Ordered array</h2>
+<p>Assume that the array is a maximum ordered array, i.e., the largest value is in the right-most position in the array.</p>
+<pre><code>insert(A, k) -&gt; ():
+  // the array is ordered, so append the item, then call modified version of insertion sort
+  // which starts at the last item in the array (the only unordered item) and inserts it into 
+  // the correct position
+  A[last + 1] = k; 
+  last += 1; // preserve the index of the last item
+  insertion-sort(k); // This will take Theta(n)
+</code></pre>
+<p>The worst case run time for inserting into an ordered array is <code>O(n)</code>.</p>
+<pre><code>get-min() -&gt; int:n
+  // since the array is ordered, the min is the first item in the list
+  return A[0];
+</code></pre>
+<p>The worst case run time for <code>get-min</code> is <code>O(1)</code>.</p>
+<pre><code>extract-min() -&gt; int:
+  min = get-min();
+  // Unfortunately, that's not the end of the story, the array must then be left-shifted by one
+  // element in order to extract the minimum element. shift-copy must loop through the entire 
+  // array, so it takes n-time. 
+  // A similar method is used in Unordered Array, extract-min
+  shift-copy;
+  last -= 1;
+  return min;
+</code></pre>
+<p>The worst case run time for <code>extract-min()</code> is <code>O(n)</code>. Note that shifting the array is NOT required if this were a minimum ordered array, i.e., the minimum value is in the right most position. <code>extract-min()</code> would simply remove the last item in the array. Which would run in constant time <code>O(1)</code>.</p>
+<h2><a id="3_Unordered_Linked_List_111"></a>3. Unordered Linked List</h2>
+<pre><code>insert(L, k) -&gt; (): 
+  // since the list is unordered, simply adding to the end will suffice
+  p1 = L.head;
+  p2 = p1.next();
+  while p2 is not null:
+    p1 = p1.next();
+    p2 = p2.next();
+  n = Node(k);
+  p1.set_next(n);
+</code></pre>
+<p>Inserting into the first empty element of an unordered linked list takes <code>O(n)</code> time (since the whole list must be traversed).</p>
+<pre><code>get-min() -&gt; int:
+  // in an unordered list, the minimum value is obtained through linear search
+  // linear search runs in O(n) time
+  min = Integer.MAX();
+  l = L.head;
+  while l is not null:
+    if l.value &lt; min:
+      min = l.value;
+    l.next();
+</code></pre>
+<p><code>get-min</code> takes <code>O(n)</code> time.</p>
+<pre><code>extract-min() -&gt; int:
+  p1 = L.head;
+  p2 = p1.next();
+  p3 = null;
+  min = Integer.MAX();
+  while p2 is not null:
+    if p1.value &lt; min:
+      p3 = p1;
+      min = p1.value;
+    p1 = p1.next();
+    p2 = p2.next();
+  
+  n = p3.next().next();
+  if (n != null):
+    p3.set_next(n);
+  return min;
+</code></pre>
+<p>The worst case run time for this implementation of extract-min in an unordered linked list is <code>O(n)</code>.</p>
+<h2><a id="4_Ordered_Linked_List_163"></a>4. Ordered Linked List</h2>
+<pre><code>insert(L, k) -&gt; (): 
+  p = L.head;
+  while p.next() != null &amp;&amp; p.next().value &lt; k:
+    p = p.next();
+  n = Node(k);
+  p.set_next(n);
+</code></pre>
+<p>Ordered insertion into a pre-ordered linked list takes <code>O(n)</code> time.</p>
+<pre><code>get-min() -&gt; int:
+  return L.head.value;
+</code></pre>
+<p><code>get-min</code> takes <code>O(1)</code> time.</p>
+<pre><code>extract-min() -&gt; int:
+  // in an ordered list, the minimum value is simply the head
+  p = L.head;
+  L.head = p.next();
+  return p.value;
+</code></pre>
+<p>Since the reference to head of the linked list is simply discarded, <code>extract-min</code> runs in <code>O(1)</code> time.</p>
+<h2><a id="5_Minheap_195"></a>5. Min-heap</h2>
+<pre><code>insert(H, k) -&gt; (): 
+  // Assume the heap grows dynamically and a new item can always be inserted
+  // Let open represent the index of the first available position in the heap; 
+  // if the heap is implemented using an array, open = last (the first non-null 
+  // value of the array).
+  decrease-key(open, k);
+  heap-size += 1;
+</code></pre>
+<p>Where <code>decrease-key</code> calls:</p>
+<pre><code>// decrease the value of the element at i to k
+decrease-key(i, k) -&gt; ():
+  // Note: Calls to the internal implicit data structure have been omitted; assume
+  // that H(i) fetches the value at i in the internal array representation of the heap.
+  // set the value first, then enforce the min-heap condition
+    H(i) = k;
+    // get parent index takes constant time (array access)
+    parent = get-parent-index(i);
+    while (H(parent) &gt; H(i) &amp;&amp; i != 0):
+      // swap item at parent index with the item at i 
+      // exchange simply exchanges the values in an array; constant time
+      exchange(parent, i);
+      // set the new index to the swapped index
+      i = parent;
+</code></pre>
+<p><code>insert</code> takes <code>O(log(n))</code> time because decrease key takes <code>O(log(n))</code> time (the time to heapify the tree on the parent node of the inserted key, down to the root).</p>
+<pre><code>get-min() -&gt; int:
+  return H.root;
+</code></pre>
+<p><code>get-min</code> takes <code>O(1)</code> time since the root of the heap is the minimum value.</p>
+<pre><code>extract-min() -&gt; int:
+  min = H.root;
+  H.root = H.last; // exchange the root with the last element of the heap
+  H.last = null; // Perform the extraction.
+  H.heap-size -= 1; // since the min is extracted, the heap reduces in size by 1
+  H.min-heapify(H.root);
+  return min;
+</code></pre>
+<p>Where <code>min-heapify()</code> calls:</p>
+<pre><code>min-heapify(i) -&gt; ():
+  left = get-left-index(i);
+  right = get-right-index(i);
+  // get the index of the smallest item in the set of {i, left, right}
+  smallest = min-index(i, left, right);
+  if H(i) != smallest:
+    // swap item at index smallest with the ith element
+    exchange(smallest, i);
+    min-heapify(smallest);
+</code></pre>
+<p><code>extract-min</code> runs in <code>O(log(n))</code> time because <code>min-heapify</code> runs in <code>O(log(n))</code> time.</p>
+
+</body></html>
