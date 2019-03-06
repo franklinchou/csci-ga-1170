@@ -13,7 +13,8 @@ hash-insert(T, k):
     // for the purpose of insertion.
     if T[j] == Nil or D[j]:
       T[j] = k
-      D[j] = false // Make sure the item is not flagged as deleted
+      // Make sure the item is not flagged as deleted
+      D[j] = false
       return j
     i += 1
    while (j < T.size and i < m)
