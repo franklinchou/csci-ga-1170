@@ -31,14 +31,6 @@ class HeapArray {
         return r;
     }
 
-    // Given a node, get the index of the parent node
-    int getParent(int i) {
-        assert i > 0;  // Cannot get the parent of the root node
-        int p = i / 2;
-        assert p < arr.length;
-        return p;
-    }
-
     // `size` represents the internal capacity of the array
     // `heapSize` represents the elements that satisfy the heap condition
     // 0 <= heapSize <= size
