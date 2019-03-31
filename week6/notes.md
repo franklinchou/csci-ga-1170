@@ -17,3 +17,10 @@
   - if Z has a red uncle, re-color Z's parent, grandparent and uncle
   - if Z's uncle is black and there is a "triangle situation", rotate Z's parent
   - if Z's uncle is black and there is a "line situation" rotate Z's grandparent & recolor
+
+## Performance
+Most binary search tree operations take `O(h)` time where `h` is the height of the BST.
+The cost of these operations may become `O(n)` for a skewed or "primitive" binary tree.
+If we ensure that the height of the tree remains `O(Log(n))` after insertion and deletion, 
+then we can gaurantee the upper bound of `O(Log(n))` since the height of the red/black
+tree is always `O(Log(n))`.
