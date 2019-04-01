@@ -7,7 +7,7 @@
   - if a node is red, then its children are black
   - all paths from a node to its NIL descendants contain the same # of black nodes (black height of the red-black tree = # of nodes from the root to the NIL nodes excluding the root itself)
 - The longest path in a r/b tree (root to the farthest NIL) is no more than twice the length of the shortest path (root to the nearest NIL); the shortest path has all black nodes while the longest path alternates between red & black
-- Use of "sentinel node" to represent ALL NIL nodes (see, CLRS, p. 309).
+- Use of "sentinel node" to represent all NIL nodes (see, CLRS, p. 309).
 
 ## Insertion into a r/b tree
 
