@@ -23,7 +23,7 @@ class BTree {
   }
 }
 
-class Main {
+class InOrderThread {
 
   // All leaves (except the last right-most leaf)
   // must have a portal
