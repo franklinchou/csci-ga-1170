@@ -21,17 +21,25 @@ InOrder(root):
 ## (b) Non-recursive algorithm with threading
 ```
 InOrder(root):
-  // Assumes a data structure that includes:
-  // boolean rightThread
-  if (root == null):
-    return;
-  // left-most will navigate to the left-most 
-  // child from a given root node
-  current = left-most(root);
+  current = root;
   while (current != null):
-    if (current.rightThread):
+    if (current.left == null):
+      print(current.value);
       current = current.right;
+      if (current != null):
+        current.left = null;
     else:
-      current = left-most(current.right);
+      // Assume a function predecessor which finds the 
+      // in order predecessor by going to the right most
+      // element of the left subtree of the current
+      // or null
+      p = Predecessor(current);
+      if (p.right == null):
+        p.right = current;
+        current = current.left;
+      else:
+        p.right = null;
+        print(current.value);
+        current = current.right;
 ```
 
