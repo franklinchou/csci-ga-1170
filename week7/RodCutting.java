@@ -4,7 +4,7 @@ public class RodCutting {
     // return the maximum obtainable value
     static int cutRod(int[] price, int n) {
         // set up the memoization table
-        int m[] = new int[n+1];
+        int m[] = new int[n + 1];
         m[0] = 0;
         
         int max = 0;
