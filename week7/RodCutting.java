@@ -24,7 +24,7 @@ public class RodCutting {
         long start = System.nanoTime();
         int max = cutRod(t, size);
         long end = System.nanoTime();
-        // Averages about 2M nanoseconds
+        // Averages about 45,000 nanoseconds
         System.out.println("Max = " + max);
         System.out.println("Runtime = " + (end - start) + "ns");
     }
