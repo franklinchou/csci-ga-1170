@@ -4,7 +4,7 @@ public class RodCuttingWithCost {
     
     static final int c = 1;
     
-    // solve the rod cutting problem with DP
+    // solve the rod cutting problem with DP and fixed cost per cut
     // return the maximum obtainable value
     static int cutRod(int[] price, int n) {
         // set up the memoization table
