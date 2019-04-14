@@ -1,3 +1,5 @@
+// Week 8
+// Problem #2
 public class FindOccurrence {
     
     final static char SPECIAL = '♢';

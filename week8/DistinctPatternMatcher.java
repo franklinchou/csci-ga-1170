@@ -7,7 +7,9 @@ public class DistinctPatternMatcher {
             System.out.println("No matches found!");
             return;
         }
-        // Match in O(N) time on N-character text T
+	// Let N = the # of patterns to search for; len(T) - len(P)
+	// Let M = temporary pattern length; at least 0, at most len(P)
+	// Two loops, so the time to run is O(NM), polynomial time
         int j = 0;
         while (j <= T.length() - P.length()) {
             int i = 0;

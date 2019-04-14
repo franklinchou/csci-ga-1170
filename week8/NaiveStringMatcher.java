@@ -3,6 +3,7 @@ public class NaiveStringMatcher {
 		if (P.length() > T.length()) {
 		    System.out.println("No matches found!");
         }
+	// Single for-loop, so this algorithm runs in O(N) time
         for (int i = 0; i <= T.length() - P.length(); i++) {
             int term = i + P.length();
             // Substring doesn't include the last index, i.e.,
