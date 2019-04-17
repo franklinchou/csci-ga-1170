@@ -1,7 +1,7 @@
 public class NaiveStringMatcher {
     static void naiveMatcher(String T, String P) {
-		if (P.length() > T.length()) {
-		    System.out.println("No matches found!");
+	if (P.length() > T.length()) {
+	    System.out.println("No matches found!");
         }
 	// Single for-loop, so this algorithm runs in O(N) time
         for (int i = 0; i <= T.length() - P.length(); i++) {
