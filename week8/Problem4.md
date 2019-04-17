@@ -1,5 +1,8 @@
 # Problem 4
 
+<img src="https://github.com/franklinchou/csci-ga-1170/blob/master/week8/fsm-problem5.svg" style="float: left; margin-right: 10px;" />
+
+
 The diagram describes the state transitions of the pattern `aabab` sought in the text `aaababaabaababaab`. 
 
 - When the automata is initiated, the state begins at 0.
