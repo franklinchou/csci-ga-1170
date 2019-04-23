@@ -1,6 +1,9 @@
+// This covers the case of finding the diameter when the root is known!
+
 import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Queue;
 
 class Node {
@@ -36,19 +39,13 @@ class Graph {
         return;
     }
     
-}
-
-// The longest path between any two nodes in a tree
-// The longest shortest path between two nodes
-public class Diameter {
-    
-    
-    
-    static void bfs(Graph g, Node s) {
-        for (Map.Entry<Node, LinkedList<Node>> e : g.adj.entrySet()) {
-            if (s.key != e.getKey().key) {
-                e.getKey().color = "WHITE";
-            }
+    void bfs(Node s) {
+        Set<Node> nodes = this.adj.keySet();
+        // Reset all values because bfs mutates state
+        for (Node n: nodes) {
+            n.color = "WHITE";
+            n.predecessor = null;
+            n.d = Integer.MAX_VALUE;
         }
         s.color = "GRAY";
         s.d = 0;
@@ -57,7 +54,8 @@ public class Diameter {
         q.add(s);
         while (q.size() != 0) {
             Node u = q.remove();
-            LinkedList<Node> adj = g.adj.get(u);
+            LinkedList<Node> adj = this.adj.get(u);
+            // System.out.println("u=" + u.key + "; adj=" + adj.size());
             for (Node v: adj) {
                 if (v.color == "WHITE") {
                     v.color = "GRAY";
@@ -70,6 +68,27 @@ public class Diameter {
         }
         return;
     }
+    
+    // Return the Node that is the maximum distance from the given root
+    Node furthest(Node root) {
+        this.bfs(root);
+        int max = 0;
+        Node maxNode = null;
+        // System.out.println(this.adj.keySet().size());
+        for(Node n: this.adj.keySet()) {
+            if (n.d > max) {
+                max = n.d;
+                maxNode = n;
+            }
+        }
+        return maxNode;
+    }
+    
+}
+
+// The longest path between any two nodes in a tree
+// The longest shortest path between two nodes
+public class Diameter {
     
     public static void main(String[] args) {
         Graph gr = new Graph(6); 
@@ -84,12 +103,23 @@ public class Diameter {
         gr.addEdge(a, c);
         gr.addEdge(b, d);
         gr.addEdge(b, e);
+        gr.addEdge(b, a);
         gr.addEdge(c, f);
+        gr.addEdge(c, a);
         gr.addEdge(d, b);
         gr.addEdge(e, b);
         gr.addEdge(f, c);
         
-        distance(gr);
+        // assuming that the root is in the "center" of the tree.
+        // The longest path between any two nodes is the 
+        // longest path between the two furthest leaf nodes
+        // from the root.
+        Node fr = gr.furthest(a);
+        
+        // The second pass of BFS starts at the furthest leaf node
+        // passes through the root node and ends at the longest path
+        // between two nodes in the tree = diameter.
+        System.out.println(gr.furthest(fr).d);
     }
 
 }
