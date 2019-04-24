@@ -31,3 +31,16 @@ e -------+
   between `c -> e`, `c -> e` is classified as a TREE edge because the algorithm will always pick up `e` as within the adjacency list of
   `c`. Vertices `<b, c, e>` will all have distance from `a` of 1. By the time the algorithm encounters `d`, `e` will have been traversed, 
   therefore `d -> e` will be classified as a CROSS edge with distance `v.d = u.d + 1`.
+
+## Part B (BFS of a directed graph)
+
+In BFS of a directed graph...
+
+1. There are no forward edges. Same reason as undirected graph BFS. Since the graph is searched hierarchically each descendent in
+the parent's adjacency list is always discovered therefore a FORWARD edge will always be classified as a TREE edge.
+
+2. For each tree edge `(u, v)`, we have `v.d = u.d + 1`. Same reason as undirected graph BFS. See Part A, 2.
+
+3. For each cross edge `(u, v)`, we have `v.d <= u.d + 1`. Same reason as undirected graph BFS. See Part A, 3.
+
+4. For each back edge `(u, v)`, we have `0 <= v.d <= u.d`. (A) If `u.d = v.d`, the nodes would be in the same tier and therefore `u` would be a CROSS edge of `v`. (B) `v.d > u.d` is impossible because of (2); if `v.d > u.d`, th difference is only be 1, `u` is `v`'s ancestor and `u -> v` is a TREE edge. (C) Since a BACK edge could connect any descendant to the root, the lower bound must be 0. (A), (B) and (C) together ensure that only `0 <= v.d <= u.d` is possible.
