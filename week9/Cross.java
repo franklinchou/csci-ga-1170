@@ -67,6 +67,7 @@ public class Cross {
                     q.add(v);
                 }
                 Boolean pchk = v.predecessor != null && u.predecessor != null;
+                // What if v.predecessor = u.predecessor + 1?
                 if (v.color == "GRAY" 
                         && pchk 
                         && v.predecessor.d == u.predecessor.d) {
