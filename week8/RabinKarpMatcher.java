@@ -10,7 +10,7 @@ public class RabinKarpMatcher {
         int patternHash = hash(p, MOD);
 
         boolean match = false;
-        ArrayList < Integer > matches = new ArrayList < Integer > ();
+        ArrayList <Integer> matches = new ArrayList <Integer>();
         for (int i = 0; i < s.length() - p.length(); i++) {
             if (hash(s.substring(i, i + p.length()), MOD) == patternHash) {
                 matches.add(i);
