@@ -5,8 +5,6 @@ class Vertex {
 
     String color;
     String key;
-    int discovery;
-    int finish;
     Vertex predecessor = null;
 
     public Vertex(String key) {
@@ -19,8 +17,6 @@ class Graph {
 
     // Hash map  of lists for Adjacency List Representation
     HashMap<Vertex, LinkedList<Vertex>> adj;
-
-    int time = 0;
 
     public Graph() {
         this.adj = new HashMap<>();
@@ -49,10 +45,6 @@ class Graph {
         }
     }
 
-    void incrementTime() {
-        this.time += 1;
-    }
-
 }
 
 // Give algorithm to determine whether an undirected graph contains a
@@ -74,11 +66,9 @@ class DetectCycleUndirected {
     }
 
     static void visit(Graph g, Vertex u) {
-        g.incrementTime();
-        u.discovery = g.time;
         u.color = "GRAY";
         for (Vertex v : g.adj.get(u)) {
-            if (u.color.equals("BLACK") || v.color.equals("BLACK")) {
+            if (v.color.equals("BLACK")) {
                 break;
             }
             if (v.color.equals("WHITE")) {
@@ -92,8 +82,6 @@ class DetectCycleUndirected {
             }
         }
         u.color = "BLACK";
-        g.incrementTime();
-        u.finish = g.time;
     }
 
 
@@ -101,12 +89,14 @@ class DetectCycleUndirected {
         Vertex s = new Vertex("s");
         Vertex v = new Vertex("v");
         Vertex w = new Vertex("w");
+        Vertex x = new Vertex("x");
 
         Graph g = new Graph();
 
         g.addUndirectedEdge(s, v);
-        g.addUndirectedEdge(v, w);
-        g.addUndirectedEdge(w, s);
+        g.addUndirectedEdge(v, x);
+        g.addUndirectedEdge(x, w);
+        g.addUndirectedEdge(s, w);
 
         detectCycle(g);
         System.out.println();
