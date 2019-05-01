@@ -66,7 +66,7 @@ class DetectCycleUndirected {
             v.predecessor = null;
         }
 
-        for (Vertex v: g.adj.keySet()) {
+        for (Vertex v : g.adj.keySet()) {
             if (v.color.equals("WHITE")) {
                 visit(g, v);
             }
@@ -77,7 +77,7 @@ class DetectCycleUndirected {
         g.incrementTime();
         u.discovery = g.time;
         u.color = "GRAY";
-        for (Vertex v: g.adj.get(u)) {
+        for (Vertex v : g.adj.get(u)) {
             if (u.color.equals("BLACK") || v.color.equals("BLACK")) {
                 break;
             }
