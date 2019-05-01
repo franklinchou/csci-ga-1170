@@ -9,7 +9,7 @@ public class NaiveStringMatcher {
             // Substring doesn't include the last index, i.e.,
             // "LIST" from (0, 3) = "LIS"
             if (T.substring(i, term).equals(P)) {
-                System.out.println("Pattern matched at idnex = " + i);
+                System.out.println("Pattern matched at index = " + i);
             }
         }
         return;
