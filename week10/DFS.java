@@ -123,10 +123,10 @@ class DFS {
 
         dfs(g);
 
+        System.out.println("Node | Discovery | Finish");
+        System.out.println("--- | --- | ---");
         for (Vertex vv: g.adj.keySet()) {
-            System.out.println(vv.key);
-            System.out.println("\t" + "Discovery: " + vv.discovery);
-            System.out.println("\t" + "Finish: " + vv.finish);
+            System.out.printf("%s | %d | %d \n", vv.key, vv.discovery, vv.finish);
         }
 
     }

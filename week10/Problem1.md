@@ -2,38 +2,19 @@
 
 ## Nodes: Discovery & Finishing Times
 
-```
-q
-	Discovery: 1
-	Finish: 16
-s
-	Discovery: 2
-	Finish: 7
-v
-	Discovery: 3
-	Finish: 6
-w
-	Discovery: 4
-	Finish: 5
-t
-	Discovery: 8
-	Finish: 15
-x
-	Discovery: 9
-	Finish: 12
-z
-	Discovery: 10
-	Finish: 11
-y
-	Discovery: 13
-	Finish: 14
-r
-	Discovery: 17
-	Finish: 20
-u
-	Discovery: 18
-	Finish: 19
-```
+Node | Discovery | Finish
+--- | --- | ---
+s | 2 | 7 
+r | 17 | 20 
+y | 13 | 14 
+u | 18 | 19 
+z | 10 | 11 
+v | 3 | 6 
+t | 8 | 15 
+q | 1 | 16 
+x | 9 | 12 
+w | 4 | 5 
+
 
 ## Edge classifications
 
