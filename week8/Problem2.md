@@ -3,7 +3,9 @@
 ```
 final static char SPECIAL = '♢';
 
-static boolean findOccurrence(String T, String P, int t, int p) {
+// Find an occurrence of pattern P in T, where
+// P contains a special wildcard character
+static boolean find(String T, String P, int t, int p) {
     if (p == P.length()) {
         return true;
     }
@@ -12,12 +14,12 @@ static boolean findOccurrence(String T, String P, int t, int p) {
     }
 
     if (P.charAt(p) == SPECIAL) {
-        return findOccurrence(T, P, t + 1, p) || 
-            findOccurrence(T, P, t, p + 1);
+        return find(T, P, t + 1, p) || 
+            find(T, P, t, p + 1);
     } else if (T.charAt(t) == P.charAt(p)) {
-        return findOccurrence(T, P, t + 1, p + 1);
+        return find(T, P, t + 1, p + 1);
     } else if (p == 0) {
-        return findOccurrence(T, P, t + 1, p);
+        return find(T, P, t + 1, p);
     }
     return false;
 }
