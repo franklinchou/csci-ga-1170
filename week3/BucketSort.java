@@ -5,6 +5,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+
+/**
+ * Bucket sort is mainly useful when input is uniformly distributed over a range.
+ * When the input contains several keys that are close to each other (clustering),
+ * those elements are likely to be placed in the same bucket, which results in some
+ * buckets containing more elements than average. The worst-case scenario occurs when
+ * all the elements are placed in a single bucket.
+ *
+ * This implementation of bucket sort sorts numbers in the range (0-99) by placing them
+ * into ten buckets and using the built in TimSort. The worst case performance is
+ * when all items are in one bucket and the performance becomes equal to the performance
+ * of the internal sort algorithm, in the case, n * Log(n).
+ */
 class BucketSort {
 
     final static int SIZE = 100;
@@ -17,6 +30,11 @@ class BucketSort {
 
     Integer[] sorted;
 
+    /**
+     * 1. bucketize the list (scatter)
+     * 2. sort each individual bucket using a sorting algorithm (in this case TimSort)
+     * 3. flatten the buckets into a single list (merge/gather)
+     */
     @SuppressWarnings("unchecked")
     void sort() {
         buckets = new LinkedList[BUCKETS];
