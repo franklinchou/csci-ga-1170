@@ -22,13 +22,14 @@ class Graph {
 
         this.verticesExSource = new HashSet<>();
 
+        // Initialize vertices ex source (all the vertices, minus the source vertex)
         for (Map.Entry<Pair<Node, Node>, Integer> e : edges.entrySet()) {
             Node u = e.getKey().getLeft();
             Node v = e.getKey().getRight();
-            if (u == source) {
+            if (u != source) {
                 verticesExSource.add(u);
             }
-            if (v == source) {
+            if (v != source) {
                 verticesExSource.add(v);
             }
         }
@@ -49,7 +50,11 @@ class Graph {
         for (Map.Entry<Pair<Node, Node>, Integer> e : edges.entrySet()) {
             Node u = e.getKey().getLeft();
             Node v = e.getKey().getRight();
-            if (v.d != u.p.d + weight(u, v)) {
+            // In order to be properly relaxed, the distance from the source
+            // node must be minimized, i.e., v.d < u.d + weight(u, v).
+            // If that condition is NOT satisfied, the edges have not been
+            // properly relaxed.
+            if (v.d > u.d + weight(u, v)) {
                 return false;
             }
         }
@@ -70,10 +75,8 @@ class Graph {
     }
 
     boolean validateDistances() {
-        for (Map.Entry<Pair<Node, Node>, Integer> e : edges.entrySet()) {
-            Node u = e.getKey().getLeft();
-            Node v = e.getKey().getRight();
-            if (v.d != u.d + weight(u, v)) {
+        for (Node u : this.verticesExSource) {
+            if (u.d != u.p.d + weight(u.p, u)) {
                 return false;
             }
         }
@@ -82,11 +85,11 @@ class Graph {
 
     boolean validateOutliers() {
         for (Node u : this.verticesExSource) {
-            if (u.d == Integer.MAX_VALUE && u.p == null) {
+            if (u.p == null && u.d != Integer.MAX_VALUE) {
                 return false;
             }
         }
-        return false;
+        return true;
     }
 
 }
@@ -94,11 +97,12 @@ class Graph {
 class Node {
     Integer d;
     Node p;
-
     String key;
 
-    public Node(String key) {
+    public Node(String key, Integer d, Node p) {
         this.key = key;
+        this.d = d;
+        this.p = p;
     }
 
 }
@@ -106,9 +110,28 @@ class Node {
 
 class VerifyDijkstra {
 
-    
-
     public static void main(String[] args) {
 
+        Node s = new Node("s", 0, null);
+        Node y = new Node("y", 5, s);
+        Node t = new Node("t", 8, y);
+        Node z = new Node("z", 7, y);
+        Node x = new Node("x", 9, t);
+
+        HashMap<Pair<Node, Node>, Integer> edges = new HashMap<>();
+
+        edges.put(Pair.of(s, t), 10);
+        edges.put(Pair.of(s, y), 5);
+        edges.put(Pair.of(t, y), 2);
+        edges.put(Pair.of(t, x), 1);
+        edges.put(Pair.of(y, x), 9);
+        edges.put(Pair.of(y, z), 2);
+        edges.put(Pair.of(y, t), 3);
+        edges.put(Pair.of(x, z), 4);
+        edges.put(Pair.of(z, x), 6);
+        edges.put(Pair.of(z, s), 7);
+
+        Graph g = new Graph(s, edges);
+        System.out.print(g.validateAll());
     }
 }
