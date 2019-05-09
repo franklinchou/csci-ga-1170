@@ -74,6 +74,10 @@ class Graph {
         return this.source.d == 0 && this.source.p == null;
     }
 
+    
+    // Excluding the source node, the shortest distance between each node and the 
+    // source node is equivalent to the distance between that node's predecessor
+    // and the edge connecting that node and its predecessor.
     boolean validateDistances() {
         for (Node u : this.verticesExSource) {
             if (u.d != u.p.d + weight(u.p, u)) {
@@ -83,6 +87,9 @@ class Graph {
         return true;
     }
 
+
+    // Excluding the source node, any unreachable node (node without a predecessor) 
+    // must have a distance to the source of infinity.
     boolean validateOutliers() {
         for (Node u : this.verticesExSource) {
             if (u.p == null && u.d != Integer.MAX_VALUE) {
