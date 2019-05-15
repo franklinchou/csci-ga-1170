@@ -1,5 +1,6 @@
-// Longest common subsequence
-public class LCS {
+// Determine the length of the Longest common subsequence
+// using a recursive method
+public class LCSRecursive {
     
     static String X = "CART";
     
