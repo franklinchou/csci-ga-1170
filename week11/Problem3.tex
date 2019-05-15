@@ -1,0 +1,30 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[latin1]{inputenc}
+
+\title{Problem 3}
+\author{F. Chou}
+\date{May 9, 2019}
+
+\begin{document}
+\maketitle
+
+
+The multiplicative rule of probability states that to find the probability of the intersection of 
+two independent events multiply them together. Here, since each event is independent, the probability
+that a certain route will not fail is the product of each segment of the route not failing or the 
+product of the probability of each edge not failing. In other words, $\forall (u, v) \in E$, find path, 
+$u \xrightarrow{p} v : \max \prod r(u, v) $.
+
+
+To accomplish this, extract the maximum from the queue (rather than the minimum since Dijkstra is minimizing path
+length) and modify the $\textrm{relax}$ function to maximize products rather than sums, e.g.,
+
+$$\textrm{relax}(u, v) = 
+    (v.d, v.\pi) := (u.d * w(u, v)), u) \textrm{ if } v.d < u.d * w(u, v) 
+$$
+
+
+\end{document}
