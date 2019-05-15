@@ -14,6 +14,13 @@ public class LCSBottomUp {
         int m = a.length() + 1; // Row
         int n = b.length() + 1; // Column
         
+        // The lookup actually stores the number of shared
+        // values between two substrings. E.g., in ABBA and PBCA
+        // ABB[A] => 0,1,1,2
+        // The second A in ABBA matches:
+        // - B in PBCA
+        // - A in PBCA
+        // Even though the continuous substring is separated by C
         int[][] lookup = new int[m][n];
         
         // initialize the lookup table
@@ -34,10 +41,15 @@ public class LCSBottomUp {
                 // see lookup table initialization
                 int previous = lookup[i][j - 1];
                 if (a.substring(i - 1, i).equals(b.substring(j - 1, j))) {
-                    // 
+                    // If there is a match, the diagonal serves as
+                    // the memoized maximum number of shared characters
+                    // prior to a match being discovered.
                     lookup[i][j] = lookup[i - 1][j - 1] + 1;
                 } else {
-                    //
+                    // If there is no match, look up the largest number of
+                    // characters that were matching up until that character
+                    // was discovered (since we are looking for the longest
+                    // common subsequence).
                     lookup[i][j] = Math.max(lookup[i - 1][j], lookup[i][j - 1]);
                 }
             }
@@ -48,6 +60,7 @@ public class LCSBottomUp {
             System.out.println(Arrays.toString(row));
         }
         
+        // TODO Backtrace
     }
 
     public static void main(String []args){
