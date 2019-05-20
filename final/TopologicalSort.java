@@ -40,7 +40,7 @@ class Graph {
         // Transpose the graph first
         Graph t = new Graph();
         for (Node n : this.vs) {
-            LinkedList nAdj = this.adj.get(n);
+            LinkedList<Node> nAdj = this.adj.get(n);
             if (nAdj != null) {
                 for (Node p : nAdj) {
                     t.addEdge(p, n);
