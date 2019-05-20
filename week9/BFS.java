@@ -27,13 +27,9 @@ class Graph {
         LinkedList<Node> adjacents = this.adj.get(u);
         if (adjacents == null) {
             adjacents = new LinkedList<Node>();
-            adjacents.add(v);
-            this.adj.put(u, adjacents);
-        } else {
-            adjacents.add(v);
-            this.adj.put(u, adjacents);
         }
-        return;
+        adjacents.add(v);
+        this.adj.put(u, adjacents);
     }
     
 }
