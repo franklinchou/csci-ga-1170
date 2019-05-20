@@ -50,7 +50,7 @@ class Graph {
         
         HashMap<Node, Integer> inDegrees = new HashMap<>();
         for (Node n: vs) {
-            LinkedList<Node> nAdjs = this.adj.get(n);
+            LinkedList<Node> nAdjs = t.adj.get(n);
             if (nAdjs == null) {
                 inDegrees.put(n, 0);
             } else {
@@ -71,10 +71,9 @@ class Graph {
             Node u = q.remove();
             order.add(u);
             LinkedList<Node> uAdj = this.adj.get(u);
-            System.out.println("u = " + u.key);
+            // System.out.println("u = " + u.key);
             if (uAdj != null) {
                 for (Node v : uAdj) {
-                    System.out.println("u-adj = " + uAdj.size());
                     Integer p = inDegrees.get(v) - 1;
                     inDegrees.put(v, p);
                     if (p == 0) {
