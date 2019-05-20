@@ -1,3 +1,5 @@
+// This runs in logarithmic time (similar implementation
+// to binary search)
 public class IntegerSquareRoot {
     
     public static void main(String[] args) {
@@ -7,10 +9,15 @@ public class IntegerSquareRoot {
         int lo = 0;
         int hi = n + 1; 
         assert(n >= 0);
+
+        // INVARIANT = 
+        // At the start of each iteration of the while loop
+        // lo - 1 < sqrt(n) <= hi
         while (lo < hi) {
             int m = (lo + hi) / 2;
             // System.out.println("m = " + m);
             int sq = m * m;
+            
             if (sq == n) {
                 System.out.println(m);
                 break;
